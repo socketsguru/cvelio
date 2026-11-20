@@ -31,7 +31,7 @@ TEMPLATES = {
         Template(
             "startup",
             "Startups and product companies",
-            1,
+            2,
             10,
             "Audience: a founder or engineering lead at a small, fast company. Tone: direct, "
             "plain and warm, like a sharp colleague describing their work. Emphasise ownership, "

@@ -139,8 +139,9 @@ def tailor(profile_text: str, job: str, template: Template, provider: Provider, 
                "agreement, choose forms that do not depend on it.")
     style = (
         f"{template.brief}\nLength: the whole resume must fit on {pages} page"
-        f"{'s' if pages > 1 else ''}, about {WORDS[pages]} words in total. If the profile has too "
-        "little relevant material to reach that, write a shorter resume; never pad.\n"
+        f"{'s' if pages > 1 else ''}, about {WORDS[pages]} words in total. Use the space the "
+        "relevant material deserves: two full pages are welcome for a long career, and a shorter "
+        "resume is right when the profile has less to say. Never pad.\n"
         f"Language: write every part of the resume, including section headings, in {lang}. "
         "Write the analysis and coverage in the same language.\n"
         f"{VOICES[voice]} {grammar}\n{GAP_POLICIES[policy]}"

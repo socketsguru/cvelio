@@ -108,17 +108,18 @@ def build_pdf(resume: dict, template: Template, target: Path, paper: str = "lett
               pages: int | None = None, watermark: bool = False) -> Built:
     """Write the PDF, nudging type size and margins so the text fits its pages.
 
-    Two cases are corrected: the resume runs past the target page count, or its last page
-    holds only a few stray lines. If typography alone cannot fix it, `fits` is False and
-    `room` says how many words would fit, so the caller can ask for a shorter text.
+    If the resume runs past the target page count, or its last page holds only a few stray
+    lines, smaller type and margins are tried. Content is never cut here. `fits` is False
+    only when the resume is still over the target, and `room` says how many words would fit.
     """
     goal = pages or template.pages
     source = document(resume, template, paper, watermark=watermark)
     words = _compile(source, target)
-    leftover = len(words) > 1 and words[-1] < 0.35 * (sum(words[:-1]) / len(words[:-1]))
-    if len(words) <= goal and not leftover:
+    over = len(words) > goal
+    leftover = len(words) > 1 and words[-1] < 0.15 * (sum(words[:-1]) / len(words[:-1]))
+    if not over and not leftover:
         return Built(len(words), source, True, sum(words))
-    wanted = goal if len(words) > goal else len(words) - 1
+    wanted = goal if over else len(words) - 1
     scratch = target.with_name(target.name + ".fit")
     try:
         for shrink, tight in FIT_STEPS[1:]:
@@ -129,4 +130,6 @@ def build_pdf(resume: dict, template: Template, target: Path, paper: str = "lett
                 return Built(len(fitted), candidate, True, sum(fitted))
     finally:
         scratch.unlink(missing_ok=True)
-    return Built(len(words), source, False, sum(words[:wanted]))
+    # A few stray lines on the last page are left alone: only running past the target
+    # is worth asking the model to cut content for.
+    return Built(len(words), source, not over, sum(words[:wanted]))

@@ -150,7 +150,8 @@ def plan(args) -> list[tuple]:
     if args.template or args.provider or args.model:
         provider = pick_provider(args.provider)
         return [(TEMPLATES[args.template or DEFAULT_TEMPLATE], provider, pick_model(provider, args.model))]
-    providers = [p for p in available() if p.default_model or os.getenv("CVELIO_MODEL")]
+    providers = [p for p in available()
+                 if p.default_model or os.getenv(f"{p.name.upper()}_MODEL") or os.getenv("CVELIO_MODEL")]
     if not providers:
         pick_provider()  # raises the helpful "no key" error
     random.shuffle(providers)
@@ -262,7 +263,7 @@ def cmd_doctor(args) -> None:
     line(True, "settings", f"voice: {settings.get('voice') or 'implied'}, gender: {settings.get('gender') or 'not set'}, "
                            f"keys: {'AWS Parameter Store ' + ssm['prefix'] if ssm.get('prefix') else 'environment / .env'}")
     ready = available()
-    line(bool(ready), "providers", ", ".join(f"{p.name} ({p.default_model or 'set MODEL'})" for p in ready)
+    line(bool(ready), "providers", ", ".join(f"{p.name} ({os.getenv(p.name.upper() + '_MODEL') or p.default_model or 'set MODEL'})" for p in ready)
          or "no API key found. Set one in the environment or .env, or run: make init")
     apify, github = bool(config.secret("APIFY_TOKEN", "apify")), bool(config.github_token())
     line(apify, "apify", "token found (LinkedIn for make enrich)" if apify else "no token (only needed to read LinkedIn)", required=False)

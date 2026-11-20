@@ -68,7 +68,7 @@ make cv JOB=posting.txt TEMPLATE=startup PROVIDER=gemini
 
 Each resume lands in `output/<company-role>/` with a report that lists every requirement of the posting with the evidence found for it, the requirements you have no evidence for, anything added beyond your profile, and any term to double-check before sending.
 
-If the text runs past its page target, Cvelio first tightens type size and margins, then asks the model to cut the content least relevant to the posting.
+Every template allows two pages; pass `PAGES=1` if you want one. Only when the text runs past the target does Cvelio step in: it first tightens type size and margins, then asks the model to cut the content least relevant to the posting.
 
 | Option | Meaning | Default |
 | --- | --- | --- |
@@ -101,7 +101,7 @@ A template sets the look of the page and also the tone, section order and length
 | Template | For | Look | Writing |
 | --- | --- | --- | --- |
 | `corporate` | Large enterprises, banks, consultancies, government | Serif, black, ruled headings, up to 2 pages | Formal; scale, compliance, process, work across teams |
-| `startup` | Startups and product companies | Sans serif, one accent colour, 1 page | Direct; ownership, things shipped, product impact |
+| `startup` | Startups and product companies | Sans serif, one accent colour, up to 2 pages | Direct; ownership, things shipped, product impact |
 | `academic` | Universities, research labs, graduate programmes | Serif, small caps, up to 2 pages | Sober; education first, methods, publications, teaching |
 
 ## Models
@@ -112,6 +112,8 @@ A template sets the look of the page and also the tone, section order and length
 | `gemini` | `GEMINI_API_KEY` | `gemini-3.8-flash` |
 | `openrouter` | `OPENROUTER_API_KEY` | `openrouter/free` |
 | `openai` | `OPENAI_API_KEY` | none; pass `MODEL=` |
+
+To change a provider's model for good, set `<PROVIDER>_MODEL` (for example `OPENROUTER_MODEL=openai/gpt-6-luna`) in the environment, in `.env`, or under `env:` in `config.yaml`. `MODEL=` on the command line overrides it for one build.
 
 The `openai` provider works with any OpenAI-compatible endpoint. Set `OPENAI_BASE_URL` to use a local model, for example `http://localhost:11434/v1` for Ollama; in that case your profile never leaves your machine. Each provider's endpoint can be changed with `<PROVIDER>_BASE_URL`, in the environment or under `env:` in `config.yaml`.
 

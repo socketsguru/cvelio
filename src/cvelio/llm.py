@@ -67,7 +67,9 @@ def pick_provider(name: str | None = None) -> Provider:
 
 
 def pick_model(provider: Provider, model: str | None = None) -> str:
-    model = model or os.getenv("CVELIO_MODEL") or provider.default_model
+    # Most specific wins: the argument, then <PROVIDER>_MODEL, then CVELIO_MODEL, then the default.
+    config.load()
+    model = model or os.getenv(f"{provider.name.upper()}_MODEL") or os.getenv("CVELIO_MODEL") or provider.default_model
     if not model:
         raise LLMError(f"Provider '{provider.name}' has no default model. Pass --model or set CVELIO_MODEL.")
     return model

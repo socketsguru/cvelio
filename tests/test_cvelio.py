@@ -5,7 +5,7 @@ import yaml
 
 from cvelio import config, profile, render, report
 from cvelio.cli import slug
-from cvelio.llm import LLMError
+from cvelio.llm import PROVIDERS, LLMError, pick_model
 from cvelio.tailor import fence_additions, gap_policy, normalize
 from cvelio.templates import TEMPLATES
 
@@ -158,3 +158,20 @@ def test_adjacent_additions_are_fenced_into_familiar_with():
     assert skills == [{"label": "Languages", "items": ["Go"]}, {"label": "Familiaridad con", "items": ["Rust"]}]
     added = {a["claim"]: a["basis"] for a in result["added"]}
     assert set(added) == {"Rust", "CI/CD", "Never used anywhere"} and "WARNING" in added["CI/CD"] and "WARNING" not in added["Rust"]
+
+
+def test_model_precedence(monkeypatch, tmp_path):
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
+    config.load.cache_clear()
+    for name in ("CVELIO_MODEL", "OPENROUTER_MODEL", "OPENAI_MODEL"):
+        monkeypatch.delenv(name, raising=False)
+    assert pick_model(PROVIDERS["openrouter"]) == "openrouter/free"
+    monkeypatch.setenv("CVELIO_MODEL", "global")
+    monkeypatch.setenv("OPENROUTER_MODEL", "mine")
+    assert pick_model(PROVIDERS["openrouter"]) == "mine"
+    assert pick_model(PROVIDERS["anthropic"]) == "global"
+    assert pick_model(PROVIDERS["openrouter"], "explicit") == "explicit"
+    monkeypatch.delenv("CVELIO_MODEL")
+    with pytest.raises(LLMError):
+        pick_model(PROVIDERS["openai"])
+    config.load.cache_clear()
