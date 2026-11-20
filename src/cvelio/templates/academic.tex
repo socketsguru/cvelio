@@ -1,13 +1,13 @@
-% academic: book serif, small-caps headings, quiet and dense like a CV.
+% academic: Latin Modern serif, small-caps headings, quiet and dense like a CV.
 \documentclass[%%PAPER%%]{article}
 \usepackage[fontsize=%%FONTSIZE%%pt]{fontsize}
 \usepackage[left=1in,right=1in,top=.85in,bottom=.85in]{geometry}
 %%FIT%%
 \usepackage{fontspec,xcolor,enumitem,needspace}
 \usepackage[hidelinks]{hyperref}
+%%WATERMARK%%
 \hypersetup{pdftitle={%%PDFTITLE%%},pdfauthor={%%PDFAUTHOR%%}}
-\setmainfont{texgyrepagella}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,
-  ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+% No font is set on purpose: fontspec's default is Latin Modern, the classic LaTeX face.
 \definecolor{rule}{HTML}{7A1F2B}
 \pagestyle{plain}
 \setlength{\parindent}{0pt}

@@ -7,6 +7,8 @@ import urllib.parse
 import urllib.request
 from dataclasses import dataclass
 
+from . import config
+
 
 class LLMError(Exception):
     pass
@@ -33,23 +35,35 @@ PROVIDERS = {
 }
 
 
+def api_key(p: Provider) -> str:
+    return config.secret(p.key_env, p.name)
+
+
 def _available(p: Provider) -> bool:
-    return bool(os.getenv(p.key_env)) or (p.name == "openai" and bool(os.getenv(p.base_env)))
+    config.load()
+    return bool(api_key(p)) or (p.name == "openai" and bool(os.getenv(p.base_env)))
+
+
+def available() -> list[Provider]:
+    """Every provider that has a key right now, in order of preference."""
+    return [p for p in PROVIDERS.values() if _available(p)]
 
 
 def pick_provider(name: str | None = None) -> Provider:
+    config.load()
     name = (name or os.getenv("CVELIO_PROVIDER") or "").strip().lower()
     if name:
         if name not in PROVIDERS:
             raise LLMError(f"Unknown provider '{name}'. Choose one of: {', '.join(PROVIDERS)}.")
         if not _available(PROVIDERS[name]):
-            raise LLMError(f"{PROVIDERS[name].key_env} is not set.")
+            raise LLMError(f"No key for '{name}': {PROVIDERS[name].key_env} is not set.")
         return PROVIDERS[name]
     for provider in PROVIDERS.values():
         if _available(provider):
             return provider
     keys = ", ".join(p.key_env for p in PROVIDERS.values())
-    raise LLMError(f"No API key found. Set one of {keys} in your environment or in a .env file.")
+    raise LLMError(f"No API key found. Set one of {keys} in your environment or in a .env file, "
+                   "or point Cvelio at AWS Parameter Store with: make init")
 
 
 def pick_model(provider: Provider, model: str | None = None) -> str:
@@ -79,7 +93,7 @@ def _post(url: str, headers: dict, payload: dict) -> dict:
 
 
 def complete(system: str, user: str, provider: Provider, model: str) -> str:
-    key = os.getenv(provider.key_env, "")
+    key = api_key(provider)
     base = (os.getenv(provider.base_env) or provider.base_url).rstrip("/")
     if provider.name == "anthropic":
         data = _post(

@@ -10,8 +10,8 @@ Tailors one profile to every posting in a folder and prints three things:
 
 Costs one model call per posting.
 
-    uv run python evals/run.py                         # example profile, example jobs
-    uv run python evals/run.py --profile ~/.config/cvelio/profile.yaml --pdf
+    make eval
+    make eval PROFILE=~/.config/cvelio/profile.yaml
 """
 import argparse
 import json
@@ -58,6 +58,7 @@ def main() -> None:
     ap.add_argument("-t", "--template", choices=list(TEMPLATES), default=DEFAULT_TEMPLATE)
     ap.add_argument("--provider")
     ap.add_argument("--model")
+    ap.add_argument("--fill", type=float, default=0, help="gap-filling level, 0 to 1 (default: 0, strict)")
     ap.add_argument("--pdf", action="store_true", help="also render each resume to PDF")
     ap.add_argument("-o", "--out", default="output/evals")
     args = ap.parse_args()
@@ -77,7 +78,7 @@ def main() -> None:
     print(f"{len(jobs)} postings · {provider.name}/{model} · template {template.name}")
 
     with ThreadPoolExecutor(max_workers=5) as pool:
-        futures = {name: pool.submit(tailor, profile_text, job, template, provider, model) for name, job in jobs.items()}
+        futures = {name: pool.submit(tailor, profile_text, job, template, provider, model, fill=args.fill) for name, job in jobs.items()}
         results = {name: future.result() for name, future in futures.items()}
 
     out = Path(args.out)

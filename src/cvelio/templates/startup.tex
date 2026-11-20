@@ -1,13 +1,14 @@
-% startup: modern sans, left-aligned, one accent colour, generous whitespace.
+% startup: Latin Modern Sans, left-aligned, one accent colour, generous whitespace.
 \documentclass[%%PAPER%%]{article}
 \usepackage[fontsize=%%FONTSIZE%%pt]{fontsize}
 \usepackage[left=.85in,right=.85in,top=.7in,bottom=.7in]{geometry}
 %%FIT%%
 \usepackage{fontspec,xcolor,enumitem,needspace}
 \usepackage[hidelinks]{hyperref}
+%%WATERMARK%%
 \hypersetup{pdftitle={%%PDFTITLE%%},pdfauthor={%%PDFAUTHOR%%}}
-\setmainfont{FiraSans}[Extension=.otf,UprightFont=*-Regular,BoldFont=*-SemiBold,
-  ItalicFont=*-Italic,BoldItalicFont=*-SemiBoldItalic]
+% Latin Modern Sans: the sans companion of the LaTeX default face.
+\renewcommand{\familydefault}{\sfdefault}
 \definecolor{ink}{HTML}{16202A}
 \definecolor{accent}{HTML}{0F766E}
 \definecolor{muted}{HTML}{5B6770}

@@ -44,6 +44,7 @@ def check(result: dict, profile_text: str) -> dict:
         "keyword_coverage": len(covered) / len(keywords) if keywords else 0.0,
         "strong": statuses.count("strong"), "partial": statuses.count("partial"), "gap": statuses.count("gap"),
         "words": len(text.split()),
+        "added": result.get("added", []),
     }
 
 
@@ -52,7 +53,7 @@ def markdown(result: dict, checks: dict, meta: dict) -> str:
     lines = [
         f"# Fit report: {a['role'] or 'role'}" + (f" at {a['company']}" if a["company"] else ""),
         "",
-        f"- Template: {meta['template']} · Model: {meta['provider']}/{meta['model']} · Pages: {meta['pages']} · Words: {checks['words']}",
+        f"- Template: {meta['template']} · Gap filling: {meta.get('policy', 'strict')} · Model: {meta['provider']}/{meta['model']} · Pages: {meta['pages']} · Words: {checks['words']}",
         f"- Must-haves: {checks['strong']} strong, {checks['partial']} partial, {checks['gap']} gap",
         f"- Posting keywords in the resume: {len(checks['covered'])}/{len(checks['covered']) + len(checks['missing'])} ({checks['keyword_coverage']:.0%})",
         "",
@@ -69,6 +70,11 @@ def markdown(result: dict, checks: dict, meta: dict) -> str:
                   "These terms are in the resume but not word for word in your profile. Most are "
                   "rewordings; make sure none is a claim you cannot back up.", "",
                   "- " + ", ".join(checks["unverified"])]
+    if checks["added"]:
+        lines += ["", "## Added beyond your profile", "",
+                  "Your profile does not state these. They were added under the gap-filling level "
+                  "you chose. Remove any you could not discuss in an interview, or build with FILL=0.", ""]
+        lines += [f"- **{a['claim']}**: {a['basis'] or 'no basis given'}" for a in checks["added"]]
     gaps = [c["requirement"] for c in result["coverage"] if c["status"] == "gap"]
     if gaps:
         lines += ["", "## Gaps", "",

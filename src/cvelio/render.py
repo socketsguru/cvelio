@@ -51,13 +51,17 @@ def body(resume: dict) -> str:
 # Each step is (font size reduction in pt, tighter margins?). Tried in order when fitting.
 FIT_STEPS = ((0, False), (0.5, False), (1, False), (1, True))
 TIGHT = r"\geometry{left=.65in,right=.65in,top=.55in,bottom=.55in}"
+WATERMARK = (r"\usepackage{draftwatermark}"
+             r"\DraftwatermarkOptions{text={DRAFT\\UNVERIFIED CLAIMS},fontsize=44pt,color={[gray]{0.86}},angle=50}")
 
 
-def document(resume: dict, template: Template, paper: str = "letter", shrink: float = 0, tight: bool = False) -> str:
+def document(resume: dict, template: Template, paper: str = "letter", shrink: float = 0,
+             tight: bool = False, watermark: bool = False) -> str:
     replacements = {
         "%%PAPER%%": {"letter": "letterpaper", "a4": "a4paper"}[paper],
         "%%FONTSIZE%%": f"{template.fontsize - shrink:g}",
         "%%FIT%%": TIGHT if tight else "",
+        "%%WATERMARK%%": WATERMARK if watermark else "",
         "%%PDFTITLE%%": tex(f"{resume['name']} - Resume"),
         "%%PDFAUTHOR%%": tex(resume["name"]),
         "%%BODY%%": body(resume),
@@ -100,7 +104,8 @@ def _compile(source: str, target: Path) -> list[int]:
         return words
 
 
-def build_pdf(resume: dict, template: Template, target: Path, paper: str = "letter", pages: int | None = None) -> Built:
+def build_pdf(resume: dict, template: Template, target: Path, paper: str = "letter",
+              pages: int | None = None, watermark: bool = False) -> Built:
     """Write the PDF, nudging type size and margins so the text fits its pages.
 
     Two cases are corrected: the resume runs past the target page count, or its last page
@@ -108,7 +113,7 @@ def build_pdf(resume: dict, template: Template, target: Path, paper: str = "lett
     `room` says how many words would fit, so the caller can ask for a shorter text.
     """
     goal = pages or template.pages
-    source = document(resume, template, paper)
+    source = document(resume, template, paper, watermark=watermark)
     words = _compile(source, target)
     leftover = len(words) > 1 and words[-1] < 0.35 * (sum(words[:-1]) / len(words[:-1]))
     if len(words) <= goal and not leftover:
@@ -117,7 +122,7 @@ def build_pdf(resume: dict, template: Template, target: Path, paper: str = "lett
     scratch = target.with_name(target.name + ".fit")
     try:
         for shrink, tight in FIT_STEPS[1:]:
-            candidate = document(resume, template, paper, shrink, tight)
+            candidate = document(resume, template, paper, shrink, tight, watermark)
             fitted = _compile(candidate, scratch)
             if len(fitted) <= wanted:
                 scratch.replace(target)

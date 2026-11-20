@@ -1,13 +1,13 @@
-% corporate: conservative serif, black ink, ruled uppercase headings.
+% corporate: Latin Modern serif, black ink, ruled uppercase headings.
 \documentclass[%%PAPER%%]{article}
 \usepackage[fontsize=%%FONTSIZE%%pt]{fontsize}
 \usepackage[left=.8in,right=.8in,top=.7in,bottom=.7in]{geometry}
 %%FIT%%
 \usepackage{fontspec,xcolor,enumitem,needspace}
 \usepackage[hidelinks]{hyperref}
+%%WATERMARK%%
 \hypersetup{pdftitle={%%PDFTITLE%%},pdfauthor={%%PDFAUTHOR%%}}
-\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,
-  ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+% No font is set on purpose: fontspec's default is Latin Modern, the classic LaTeX face.
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \raggedright\raggedbottom

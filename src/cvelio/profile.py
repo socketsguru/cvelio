@@ -5,6 +5,7 @@ from pathlib import Path
 
 import yaml
 
+from . import config
 from .llm import Provider, complete_json
 
 
@@ -15,8 +16,7 @@ class ProfileError(Exception):
 def default_path() -> Path:
     if os.getenv("CVELIO_PROFILE"):
         return Path(os.environ["CVELIO_PROFILE"]).expanduser()
-    base = Path(os.getenv("XDG_CONFIG_HOME") or Path.home() / ".config")
-    return base / "cvelio" / "profile.yaml"
+    return config.home() / "profile.yaml"
 
 
 def example() -> str:
@@ -35,7 +35,11 @@ def load(path: Path) -> tuple[dict, str]:
         raise ProfileError(f"{path} needs at least a 'name'. See: cvelio init --help")
     if not data.get("experience") and not data.get("education"):
         raise ProfileError(f"{path} has no 'experience' or 'education' yet. Add some and try again.")
-    return data, yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=100)
+    from . import enrich
+
+    text = yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=100)
+    evidence = enrich.load(path)
+    return data, text + ("\n" + evidence if evidence else "")
 
 
 def read_source(path: Path) -> str:
