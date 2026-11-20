@@ -1,0 +1,23 @@
+Senior Frontend Engineer - Lumen Health (Hybrid, Austin TX)
+
+Lumen Health builds the patient portal used by 300 clinics. Patients book visits, message their care team and pay bills in our web app. We are a product team of 25.
+
+The role
+- Build accessible, responsive interfaces in React and TypeScript with Next.js.
+- Own features end to end with designers and product managers, from Figma to production.
+- Grow our design system and component library in Storybook.
+- Improve performance: Core Web Vitals, bundle size, rendering strategy.
+- Write unit and end-to-end tests with Jest, React Testing Library and Playwright or Cypress.
+- Build real-time features such as messaging and notifications.
+
+Requirements
+- 5+ years of professional frontend development.
+- Expert React and TypeScript; strong HTML, CSS and browser fundamentals.
+- Experience meeting WCAG 2.1 AA accessibility standards.
+- A track record of measurable performance or conversion improvements.
+- Experience consuming REST or GraphQL APIs and managing client state.
+
+Bonus
+- Healthcare or other regulated-industry experience (HIPAA).
+- Experience mentoring other engineers.
+- Tailwind CSS.

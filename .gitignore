@@ -221,3 +221,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Cvelio: generated resumes and personal data never belong in the repo
+output/
+profile.yaml
+/profile/
+*.pdf
+.DS_Store
+
+# LaTeX intermediates
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
+*.toc
+*.xdv

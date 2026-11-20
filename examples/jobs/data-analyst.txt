@@ -1,0 +1,23 @@
+Data Analyst - Brightcart (Remote)
+
+Brightcart is an online marketplace for independent grocers. The analytics team of five answers the questions that shape pricing, delivery and growth.
+
+What you will do
+- Write SQL against our Snowflake warehouse to answer questions from operations, finance and marketing.
+- Build and maintain dashboards in Looker or Tableau that business teams use every day.
+- Model data with dbt and keep metric definitions consistent.
+- Design and analyse A/B tests and explain the results to people who are not statisticians.
+- Automate recurring reports and data quality checks with Python.
+- Turn findings into clear recommendations for stakeholders.
+
+What you bring
+- 3+ years in a data analyst or analytics engineering role.
+- Advanced SQL: window functions, CTEs, query optimisation.
+- Python for analysis (pandas) and comfort with statistics: hypothesis testing, regression.
+- Experience with a BI tool and with data modelling.
+- Clear writing and stakeholder communication.
+
+Nice to have
+- Airflow or another orchestrator.
+- Experience in e-commerce, logistics or payments.
+- Familiarity with event tracking and Google Analytics.

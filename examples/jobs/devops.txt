@@ -1,0 +1,23 @@
+Senior DevOps Engineer - Northwind Freight (Remote, Americas)
+
+Northwind Freight moves 40,000 shipments a day for retailers across North America. Our platform team keeps 60 microservices running for 90 product engineers.
+
+What you will do
+- Own our AWS infrastructure as code with Terraform, including EKS clusters, networking and IAM.
+- Build and maintain CI/CD pipelines (GitHub Actions, ArgoCD) so teams can deploy many times a day with confidence.
+- Run Kubernetes in production: upgrades, autoscaling, cost control.
+- Define SLOs with product teams and build observability with Prometheus, Grafana and Datadog.
+- Lead incident response, write blameless postmortems and take part in the on-call rotation.
+- Harden the platform: secrets management, least-privilege IAM, SOC 2 controls.
+
+What we are looking for
+- 5+ years in DevOps, SRE or platform engineering roles.
+- Deep, hands-on Terraform and AWS experience.
+- Production Kubernetes experience and solid Linux and networking fundamentals.
+- Scripting in Python, Go or Bash.
+- Experience reducing deployment time or infrastructure cost, with numbers to show for it.
+
+Nice to have
+- GitOps with ArgoCD or Flux, Helm charts.
+- Experience building an internal developer platform (Backstage).
+- AWS certifications.

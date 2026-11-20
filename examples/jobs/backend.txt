@@ -1,0 +1,23 @@
+Senior Backend Engineer - Tessera Payments (Remote, LATAM)
+
+Tessera processes card and bank payments for 8,000 merchants. Our backend handles 2,000 requests per second and money cannot go missing.
+
+What you will do
+- Design and build event-driven microservices in Go.
+- Model data in PostgreSQL and DynamoDB, and use Redis for caching and rate limiting.
+- Design clear REST and gRPC APIs for internal teams and merchants.
+- Build idempotent, auditable payment flows and reconciliation processes.
+- Own your services in production on AWS and Kubernetes: monitoring, on-call, performance tuning.
+- Keep us compliant: PCI DSS, secure coding, OWASP Top 10.
+
+What we are looking for
+- 6+ years of backend experience, at least 3 with Go.
+- Experience with messaging systems such as Kafka or SQS.
+- Strong SQL and NoSQL data modelling.
+- Fintech, banking or payments experience.
+- Experience with distributed systems concerns: consistency, retries, idempotency.
+
+Nice to have
+- Python.
+- Infrastructure as code with Terraform.
+- Experience passing security audits or penetration tests.

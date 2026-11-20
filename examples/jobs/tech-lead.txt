@@ -1,0 +1,23 @@
+Tech Lead, Advisor Platform - Meridian Wealth (New York or Remote)
+
+Meridian Wealth builds software that 4,000 financial advisors use to plan their clients' futures. We are forming a new team of seven engineers and need a tech lead to start it.
+
+What you will do
+- Lead and grow a team of 6 to 8 engineers: hiring, mentoring, one-on-ones and performance feedback.
+- Own technical direction and architecture for the advisor platform, and write the design documents.
+- Work with product and compliance stakeholders to shape the roadmap and make delivery predictable.
+- Stay hands-on about 40% of the time across a Python and Node.js backend and a React front end.
+- Raise the engineering bar: code review, testing practices, reliability and security standards.
+- Guide our adoption of AI features built on large language models.
+
+What we are looking for
+- 8+ years of software engineering, with 2+ years leading a team.
+- Experience designing microservice architectures and making build-versus-buy decisions.
+- Full-stack fluency; able to review backend and frontend work.
+- Experience in financial services or another regulated industry (SOC 2, security reviews).
+- Clear communication with non-technical stakeholders.
+
+Nice to have
+- Experience with LLM applications, RAG or document processing.
+- Agile delivery and roadmap planning experience.
+- AWS.

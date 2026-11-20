@@ -1,0 +1,31 @@
+% academic: book serif, small-caps headings, quiet and dense like a CV.
+\documentclass[%%PAPER%%]{article}
+\usepackage[fontsize=%%FONTSIZE%%pt]{fontsize}
+\usepackage[left=1in,right=1in,top=.85in,bottom=.85in]{geometry}
+%%FIT%%
+\usepackage{fontspec,xcolor,enumitem,needspace}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={%%PDFTITLE%%},pdfauthor={%%PDFAUTHOR%%}}
+\setmainfont{texgyrepagella}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,
+  ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\definecolor{rule}{HTML}{7A1F2B}
+\pagestyle{plain}
+\setlength{\parindent}{0pt}
+\raggedright\raggedbottom
+\newlist{cvbullets}{itemize}{1}
+\setlist[cvbullets]{label=\textbullet,leftmargin=1.3em,itemsep=1.5pt,topsep=2pt,parsep=0pt,partopsep=0pt}
+\newcommand{\cvsep}{\enspace\textperiodcentered\enspace}
+\newcommand{\cvheader}[3]{\begin{center}
+  {\fontsize{22}{26}\selectfont\scshape #1}\par
+  \ifx\relax#2\relax\else\vspace{4pt}{\itshape #2}\par\fi
+  \vspace{5pt}{\small #3}\par\end{center}}
+\newcommand{\cvsection}[1]{\needspace{4\baselineskip}\addvspace{13pt}
+  {\large\scshape\color{rule}#1}\par\nobreak\vspace{1pt}{\color{rule}\hrule height .4pt}\nobreak\vspace{6pt}}
+\newcommand{\cventry}[3]{\needspace{3\baselineskip}\addvspace{6pt}
+  {\bfseries #1}\hfill{\small #3}\par\nobreak
+  \ifx\relax#2\relax\else{\itshape #2}\par\nobreak\fi}
+\newcommand{\cvpara}[1]{#1\par\vspace{3pt}}
+\newcommand{\cvskill}[2]{\textit{#1:} #2\par\vspace{1.5pt}}
+\begin{document}
+%%BODY%%
+\end{document}

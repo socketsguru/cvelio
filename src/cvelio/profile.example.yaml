@@ -1,0 +1,104 @@
+# Your Cvelio profile: everything true about your career, in one place.
+#
+# Write MORE than fits on a resume. Each `cvelio build` picks the facts that matter for one
+# job posting, so the richer this file is, the better aimed every resume will be.
+# Good highlights are specific: what you built, for whom, with what, and what changed.
+# Cvelio never adds facts that are not in this file.
+#
+# This example is a fictional person. Replace everything.
+
+name: Ana Torres
+headline: Senior Software Engineer
+contact:
+  email: ana.torres@example.com
+  phone: "+52 55 5555 0101"
+  location: Guadalajara, Mexico
+  links:
+    - linkedin.com/in/ana-torres-example
+    - github.com/ana-torres-example
+
+summary: >
+  Software engineer with nine years building web platforms for logistics and fintech,
+  from React front ends to Go and Python services on AWS. Has led a team of six.
+
+experience:
+  - company: Rutalia
+    title: Tech Lead, Dispatch Platform
+    start: Mar 2022
+    end: Present
+    location: Remote
+    highlights:
+      - Led a team of six engineers building the dispatch platform used by 1,200 carriers.
+      - Designed the move from a Django monolith to Go services communicating over Kafka; p95 API latency fell from 900 ms to 180 ms.
+      - Introduced architecture decision records and a weekly design review; ran hiring loops and mentored three engineers to senior.
+      - Set quarterly roadmaps with product and operations, and reported delivery risk to the CTO.
+      - Built the Terraform modules and GitHub Actions pipelines that deploy 14 services to EKS, cutting release time from 2 hours to 15 minutes.
+      - Defined SLOs and on-call rotations with Prometheus, Grafana and PagerDuty; pages per week dropped from 22 to 6.
+      - Built the React and TypeScript dispatcher console with live map updates over WebSockets, and a shared component library in Storybook.
+      - Created dbt models and Looker dashboards on Snowflake that track on-time delivery for the operations team.
+    tech: [Go, Python, Kafka, PostgreSQL, React, TypeScript, AWS, EKS, Kubernetes, Terraform, GitHub Actions, Prometheus, Grafana, Snowflake, dbt, Looker]
+
+  - company: Pagora
+    title: Senior Backend Engineer
+    start: Jun 2019
+    end: Feb 2022
+    location: Mexico City, Mexico
+    highlights:
+      - Built the ledger service in Go and PostgreSQL that records 3 million card transactions a day with idempotent writes.
+      - Wrote the reconciliation jobs in Python and Airflow that match processor files against the ledger; unmatched items fell 70%.
+      - Passed two PCI DSS audits as the engineer responsible for key rotation and access logging.
+      - Reduced AWS spend 28% by right-sizing RDS and moving batch jobs to spot instances.
+      - Wrote SQL analyses of chargeback patterns that the risk team used to change two fraud rules.
+      - Added contract tests and a canary deploy stage to the Jenkins pipeline.
+    tech: [Go, Python, PostgreSQL, Redis, Airflow, AWS, RDS, Docker, Jenkins, SQL]
+
+  - company: Estudio Norte
+    title: Frontend Developer
+    start: Aug 2016
+    end: May 2019
+    location: Guadalajara, Mexico
+    highlights:
+      - Built storefronts and booking flows for 15 retail and travel clients with React and Next.js.
+      - Improved Core Web Vitals for a travel client; Largest Contentful Paint went from 4.1 s to 1.9 s and checkout conversion rose 11%.
+      - Brought the agency's templates to WCAG 2.1 AA and added automated accessibility checks with axe.
+      - Set up Jest and Cypress test suites that ran on every pull request.
+      - Ran A/B tests with the marketing team and reported results in Google Analytics.
+    tech: [JavaScript, TypeScript, React, Next.js, CSS, Jest, Cypress, Google Analytics]
+
+projects:
+  - name: tarifa
+    description: Open-source Go library for parsing Mexican freight tariffs; 400 GitHub stars.
+    tech: [Go]
+    url: github.com/ana-torres-example/tarifa
+
+education:
+  - school: Universidad de Guadalajara
+    degree: B.Sc. in Computer Engineering
+    start: "2012"
+    end: "2016"
+    notes: Thesis on route optimisation with genetic algorithms. Teaching assistant for Data Structures for two semesters.
+
+certifications:
+  - name: AWS Certified Solutions Architect - Associate
+    issuer: Amazon Web Services
+    issued: "2023"
+    expires: "2026"
+
+publications:
+  - "Torres, A. (2016). Route optimisation for last-mile delivery with genetic algorithms. Undergraduate thesis, Universidad de Guadalajara."
+
+skills:
+  languages: [Go, Python, TypeScript, JavaScript, SQL]
+  frontend: [React, Next.js, Storybook, Jest, Cypress]
+  data: [PostgreSQL, Redis, Kafka, Snowflake, dbt, Airflow, Looker]
+  cloud: [AWS, Kubernetes, Terraform, Docker, GitHub Actions, Jenkins, Prometheus, Grafana]
+
+languages:
+  - name: Spanish
+    level: Native
+  - name: English
+    level: Professional (C1)
+
+# Rules about how facts must be presented. Cvelio follows them in every resume.
+notes:
+  - Always state certification years; never present an expired certification as current.
