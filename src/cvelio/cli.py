@@ -75,6 +75,7 @@ def cmd_init(args) -> None:
         if region:
             ssm["region"] = region
         settings["aws_ssm"] = ssm
+    settings.setdefault("watermark_fill", config.DEFAULT_WATERMARK_FILL)
     config.save(settings)
     say(f"Settings written to {config.path()}")
 
@@ -167,7 +168,7 @@ def cmd_build(args) -> None:
     if not job:
         raise SystemExit("The job posting is empty.")
     variants = plan(args)
-    watermark = policy == "free" and not args.force
+    watermark = args.fill > config.watermark_fill() and not args.force
     voice = settings.get("voice") if settings.get("voice") in config.VOICES else "implied"
 
     say(f"Writing {len(variants)} resume{'s' if len(variants) > 1 else ''} (gap filling: {policy}):")
@@ -261,6 +262,7 @@ def cmd_doctor(args) -> None:
         line(False, "profile", str(error))
     ssm = settings.get("aws_ssm") or {}
     line(True, "settings", f"voice: {settings.get('voice') or 'implied'}, gender: {settings.get('gender') or 'not set'}, "
+                           f"watermark_fill: {config.watermark_fill():g}, "
                            f"keys: {'AWS Parameter Store ' + ssm['prefix'] if ssm.get('prefix') else 'environment / .env'}")
     ready = available()
     line(bool(ready), "providers", ", ".join(f"{p.name} ({os.getenv(p.name.upper() + '_MODEL') or p.default_model or 'set MODEL'})" for p in ready)
@@ -311,8 +313,8 @@ def parser() -> argparse.ArgumentParser:
     p.add_argument("-t", "--template", choices=list(TEMPLATES), help="build only this style (see: cvelio templates)")
     p.add_argument("--fill", type=fill_level, default=0.5, metavar="0..1",
                    help="how freely to fill gaps: 0 adds nothing, 0.5 lists closely related technologies as "
-                        "'Familiar with', 1 drafts an aspirational, watermarked resume (default: 0.5)")
-    p.add_argument("--force", action="store_true", help="with --fill 1: leave the watermark off")
+                        "'Familiar with', 1 drafts an aspirational resume, watermarked above watermark_fill (default 0.55, configurable)")
+    p.add_argument("--force", action="store_true", help="above watermark_fill: leave the watermark off")
     p.add_argument("--lang", default="English", help="language of the resume (default: English)")
     p.add_argument("--pages", type=int, choices=[1, 2], help="target length (default: the template's)")
     p.add_argument("--paper", choices=["letter", "a4"], default="letter", help="paper size (default: letter)")

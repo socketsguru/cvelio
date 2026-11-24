@@ -141,6 +141,17 @@ def test_secret_prefers_the_environment(monkeypatch, tmp_path):
     config.load.cache_clear(), config.secret.cache_clear()
 
 
+def test_watermark_fill_defaults_and_reads_config(monkeypatch, tmp_path):
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path))
+    config.load.cache_clear()
+    assert config.watermark_fill() == 0.55
+    config.save({"watermark_fill": 0.3})
+    assert config.watermark_fill() == 0.3
+    config.save({"watermark_fill": "oops"})
+    assert config.watermark_fill() == 0.55  # invalid value falls back to the default
+    config.load.cache_clear()
+
+
 def test_evidence_is_read_with_the_profile(tmp_path):
     path = tmp_path / "profile.yaml"
     path.write_text(profile.example(), encoding="utf-8")

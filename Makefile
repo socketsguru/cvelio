@@ -37,8 +37,9 @@ help:
 	'  FILL=0..1   How freely to fill gaps between your profile and the posting (default: 0.5)' \
 	'                0    strict: nothing that is not in your profile' \
 	'                0.5  adds closely related technologies as "Familiar with" (you use React and Vue: Angular)' \
-	'                1    aspirational draft of a winning profile; watermarked, since it holds unverified claims' \
-	'  FORCE=1     With FILL=1, leave the watermark off. Every added claim is still listed in the report,' \
+	'                1    aspirational draft of a winning profile; watermarked only above 0.55,' \
+	'                     since it holds unverified claims (change watermark_fill in config.yaml)' \
+	'  FORCE=1     Leave the watermark off even above that level. Every added claim is still listed in the report,' \
 	'              and you are the one who signs the resume.' \
 	'' \
 	'Other' \

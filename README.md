@@ -90,7 +90,7 @@ A posting usually asks for something your profile does not mention. `FILL` sets 
 | --- | --- | --- |
 | `0` | strict | Adds nothing. Missing requirements are left out and reported as gaps. |
 | `0.5` | adjacent | May list up to five technologies that are close siblings of ones you use (you use React and Vue; the posting asks for Angular) in a separate "Familiar with" skills group. They never appear in the summary or in experience bullets. |
-| `1` | aspirational | Drafts what a winning profile for this job would look like, adding missing skills to the text. The PDF is watermarked because it holds unverified claims. Use it to see what to learn or what to add to your profile. |
+| `1` | aspirational | Drafts what a winning profile for this job would look like, adding missing skills to the text. Above `0.55` (configurable as `watermark_fill` in `config.yaml`) the PDF is watermarked because it holds unverified claims. Use it to see what to learn or what to add to your profile. |
 
 At every level, employers, job titles, dates, degrees, certifications and numbers come only from your profile, and the report lists each added claim with its basis.
 

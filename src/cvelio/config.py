@@ -9,6 +9,7 @@ import yaml
 
 VOICES = ("implied", "first")
 GENDERS = ("", "masculine", "feminine", "neutral")
+DEFAULT_WATERMARK_FILL = 0.55  # FILL above this is watermarked; override in config.yaml
 
 
 def home() -> Path:
@@ -38,6 +39,18 @@ def save(data: dict) -> None:
     header = "# Cvelio settings. Written by `make init`; safe to edit by hand.\n"
     path().write_text(header + yaml.safe_dump(data, sort_keys=False, allow_unicode=True), encoding="utf-8")
     load.cache_clear()
+
+
+def watermark_fill() -> float:
+    """The FILL level above which built PDFs get the DRAFT/UNVERIFIED watermark.
+
+    Read from `watermark_fill` in config.yaml, falling back to 0.55, so it can
+    be tuned without editing the code.
+    """
+    try:
+        return float(load().get("watermark_fill", DEFAULT_WATERMARK_FILL))
+    except (TypeError, ValueError):
+        return DEFAULT_WATERMARK_FILL
 
 
 @functools.cache
